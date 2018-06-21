@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         public void setPrice(String price) {
-            TextView postPrice = mView.findViewById(R.id.price);
+            TextView postPrice = mView.findViewById(R.id.property_price_textview);
             postPrice.setText(price);
         }
     }
