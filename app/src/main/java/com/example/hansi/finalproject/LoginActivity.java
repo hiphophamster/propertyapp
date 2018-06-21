@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(user_id)){
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, UploadActivity.class));
 
                 }else {
                     Toast.makeText(LoginActivity.this,"User not registered", Toast.LENGTH_SHORT).show();
