@@ -32,6 +32,7 @@ public class UploadActivity extends AppCompatActivity {
 
     private ImageButton imageBtn;
     private static final int GALLERY_REQUEST_CODE = 2;
+    private static final int PICK_IMAGE_REQUEST = 71;
     private Uri uri = null;
     private EditText location;
     private EditText price;
@@ -54,7 +55,7 @@ public class UploadActivity extends AppCompatActivity {
         location = (EditText)findViewById(R.id.location);
         price = (EditText) findViewById(R.id.price);
         storage = FirebaseStorage.getInstance().getReference();
-        databaseRef = database.getReference().child("finalproject");
+        databaseRef = FirebaseDatabase.getInstance().getReference().child("HappyHomes");
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
@@ -76,51 +77,89 @@ public class UploadActivity extends AppCompatActivity {
                 final String propertyLocation = location.getText().toString().trim();
                 final String propertyDesc = textDesc.getText().toString().trim();
                 final String propertyPrice = price.getText().toString().trim();
-
                 //check for empty fields
                 if (!TextUtils.isEmpty(propertyDesc) && !TextUtils.isEmpty(propertyLocation) && !TextUtils.isEmpty(propertyPrice)) {
-                    StorageReference filepath = storage.child("post_images").child(uri.getLastPathSegment());
-                    filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests")
-                            //getting the post image download url
-                            final Uri downloadUrl = taskSnapshot.getUploadSessionUri();
-                            Toast.makeText(getApplicationContext(), "Successfully uploaded!", Toast.LENGTH_SHORT).show();
-                            final DatabaseReference newPost = databaseRef.push();
-                            //adding content to database reference
-                            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    newPost.child("location").setValue(propertyLocation);
-                                    newPost.child("desc").setValue(propertyDesc);
-                                    newPost.child("price").setValue(propertyPrice);
-                                    newPost.child("imageUrl").setValue(downloadUrl.toString());
-                                    newPost.child("uid").setValue(mCurrentUser.getUid());
-                                    newPost.child("username").setValue(dataSnapshot.child("name").getValue()).
-                                            addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Intent intent = new Intent(UploadActivity.this, MainActivity.class);
-                                                        startActivity(intent);
+                    if(uri != null) {
+                        StorageReference filepath = storage.child("post_images").child(uri.getLastPathSegment());
+                        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                @SuppressWarnings("VisibleForTests")
+                                //getting the post image download url
+                                final Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+                                Toast.makeText(getApplicationContext(), "Successfully uploaded!", Toast.LENGTH_SHORT).show();
+                                final DatabaseReference newPost = databaseRef.push();
+                                //adding content to database reference
+                                mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        newPost.child("location").setValue(propertyLocation);
+                                        newPost.child("desc").setValue(propertyDesc);
+                                        newPost.child("price").setValue(propertyPrice);
+                                        newPost.child("imageUrl").setValue(downloadUrl.toString());
+                                        newPost.child("uid").setValue(mCurrentUser.getUid());
+                                        newPost.child("username").setValue(dataSnapshot.child("name").getValue()).
+                                                addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Intent intent = new Intent(UploadActivity.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                        }
                                                     }
+                                                });
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        final DatabaseReference newPost = databaseRef.push();
+                        //adding content to database reference
+                        mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                newPost.child("location").setValue(propertyLocation);
+                                newPost.child("desc").setValue(propertyDesc);
+                                newPost.child("price").setValue(propertyPrice);
+                                newPost.child("imageUrl").setValue(null);
+                                newPost.child("uid").setValue(mCurrentUser.getUid());
+                                newPost.child("username").setValue(dataSnapshot.child("name").getValue()).
+                                        addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Intent intent = new Intent(UploadActivity.this, MainActivity.class);
+                                                    startActivity(intent);
                                                 }
-                                            });
+                                            }
+                                        });
 
-                                }
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                }
-                            });
-                        }
-                    });
+                            }
+                        });
+                    }
+
                 }
             }
         });
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null ) {
+            uri = data.getData();
+        }
+    }
 }
 
