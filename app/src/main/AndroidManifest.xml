@@ -30,6 +30,7 @@
         <activity
             android:name=".SinglePostActivity"
             android:label="@string/title_activity_single_post"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"

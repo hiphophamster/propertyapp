@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private Button uploadBtn;
 
 
     @Override
@@ -45,15 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //initialize recyclerview and FIrebase objects
-        uploadBtn = (Button)findViewById(R.id.uploadBtn);
+
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
-        uploadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent uploadIntent = new Intent(MainActivity.this, UploadActivity.class);
-                startActivity(uploadIntent);
-            }
-        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("HappyHomes");

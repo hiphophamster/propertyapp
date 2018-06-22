@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    tools:context="com.example.hansi.finalproject.SinglePostActivity">
+    android:layout_height="match_parent">
 
-    <ImageView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:scaleType="centerCrop"
-        android:id="@+id/singleImageview"/>
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        tools:context="com.example.hansi.finalproject.SinglePostActivity">
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/singleTitle"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:text="Post Title"
-        android:textColor="#100d0d"/>
+        <ImageView
+            android:id="@+id/singleImageview"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Post Description"
-        android:id="@+id/singleDesc"/>
+        <TextView
+            android:id="@+id/singleTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Property Location"
+            android:textColor="#100d0d"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/deleteBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="delete post"
-        android:background="#FFEA0404"
-        android:textColor="#fff"
-        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/singleDesc"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginTop="10dp"
+            android:text="Property Description" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/price"
+            android:text="Property Price" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Seller info"/>
 
-</LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="#FFEA0404"
+            android:text="Delete entry"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>

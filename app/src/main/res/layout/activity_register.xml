@@ -20,25 +20,25 @@
         android:layout_centerHorizontal="true">
 
         <TextView
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="#fff"
-            android:fontFamily="serif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"/>
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:fontFamily="serif"
+            android:text="Register"
+            android:textColor="#000000"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:background="@drawable/buttonstyle"
-            android:layout_margin="8dp"
             android:id="@+id/usernameField"
-            android:padding="16dp"
-            android:textColor="#000"
-            android:hint="username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/buttonstyle"
+            android:hint="username"
+            android:padding="16dp"
+            android:textColor="#000" />
         <EditText
             android:background="@drawable/buttonstyle"
             android:layout_margin="8dp"
@@ -77,10 +77,10 @@
             android:layout_margin="16dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#fff"
+            android:textColor="#CD5C5C"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="already registered? Login"/>
+            android:text="Already registered? Login"/>
 
     </LinearLayout>
 

@@ -37,6 +37,7 @@ public class UploadActivity extends AppCompatActivity {
     private EditText location;
     private EditText price;
     private EditText textDesc;
+    private EditText contactinfo;
     private Button postBtn;
     private StorageReference storage;
     private FirebaseDatabase database;
@@ -52,6 +53,7 @@ public class UploadActivity extends AppCompatActivity {
 
         postBtn = (Button)findViewById(R.id.postBtn);
         textDesc = (EditText)findViewById(R.id.textDesc);
+        contactinfo = (EditText)findViewById(R.id.contactInfo);
         location = (EditText)findViewById(R.id.location);
         price = (EditText) findViewById(R.id.price);
         storage = FirebaseStorage.getInstance().getReference();
@@ -76,9 +78,10 @@ public class UploadActivity extends AppCompatActivity {
                 Toast.makeText(UploadActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
                 final String propertyLocation = location.getText().toString().trim();
                 final String propertyDesc = textDesc.getText().toString().trim();
+                final String sellerInfo = contactinfo.getText().toString().trim();
                 final String propertyPrice = price.getText().toString().trim();
                 //check for empty fields
-                if (!TextUtils.isEmpty(propertyDesc) && !TextUtils.isEmpty(propertyLocation) && !TextUtils.isEmpty(propertyPrice)) {
+                if (!TextUtils.isEmpty(propertyDesc) && !TextUtils.isEmpty(propertyLocation) && !TextUtils.isEmpty(propertyPrice) && !TextUtils.isEmpty((sellerInfo))) {
                     if(uri != null) {
                         StorageReference filepath = storage.child("post_images").child(uri.getLastPathSegment());
                         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -96,6 +99,7 @@ public class UploadActivity extends AppCompatActivity {
                                         newPost.child("location").setValue(propertyLocation);
                                         newPost.child("desc").setValue(propertyDesc);
                                         newPost.child("price").setValue(propertyPrice);
+                                        newPost.child("contactinfo").setValue(sellerInfo);
                                         newPost.child("imageUrl").setValue(downloadUrl.toString());
                                         newPost.child("uid").setValue(mCurrentUser.getUid());
                                         newPost.child("username").setValue(dataSnapshot.child("name").getValue()).
@@ -127,6 +131,7 @@ public class UploadActivity extends AppCompatActivity {
                                 newPost.child("location").setValue(propertyLocation);
                                 newPost.child("desc").setValue(propertyDesc);
                                 newPost.child("price").setValue(propertyPrice);
+                                newPost.child("contactinfo").setValue(sellerInfo);
                                 newPost.child("imageUrl").setValue(null);
                                 newPost.child("uid").setValue(mCurrentUser.getUid());
                                 newPost.child("username").setValue(dataSnapshot.child("name").getValue()).

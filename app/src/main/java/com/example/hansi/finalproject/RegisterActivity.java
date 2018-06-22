@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     current_user_db.child("Username").setValue(username);
                                     current_user_db.child("Image").setValue("Default");
                                     Toast.makeText(RegisterActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                                    Intent regIntent = new Intent(RegisterActivity.this, ProfileActivity.class);
+                                    Intent regIntent = new Intent(RegisterActivity.this, MainActivity.class);
                                     regIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                                     startActivity(regIntent);
